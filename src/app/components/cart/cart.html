@@ -1,0 +1,140 @@
+<div class="container">
+    <!-- Header com navegação -->
+    <div class="header">
+        <div class="header__navigation">
+            <a routerLink="/home" class="link-discrete">
+                <lucide-icon [img]="icons.ArrowLeft" [size]="16"></lucide-icon>
+                Voltar ao hub de estratégias
+            </a>
+        </div>
+
+        <div class="cart-summary">
+            <lucide-icon [img]="icons.ShoppingCart"></lucide-icon>
+            <span class="cart-count">{{ totalItems() }}</span>
+        </div>
+    </div>
+
+    <!-- Título da página -->
+    <div class="page-title">
+        <h1>🛒 Meu Carrinho</h1>
+        <p>Gerencie os produtos do seu carrinho</p>
+    </div>
+
+    <!-- Estado vazio -->
+    @if (isEmpty()) {
+    <div class="empty-cart">
+        <div class="empty-cart__icon">
+            <lucide-icon [img]="icons.ShoppingBag" [size]="64"></lucide-icon>
+        </div>
+        <h2>Seu carrinho está vazio</h2>
+        <p>Adicione produtos ao carrinho para vê-los aqui</p>
+        <a routerLink="/products-server" class="btn btn-primary">
+            Começar a comprar
+        </a>
+    </div>
+    }
+
+    <!-- Lista de itens do carrinho -->
+    @if (hasItems()) {
+    <div class="cart-content">
+        <!-- Cabeçalho da lista -->
+        <div class="cart-header">
+            <h2>Itens no carrinho ({{ totalItems() }})</h2>
+            <button type="button" (click)="clearCart()" class="btn-clear">
+                <lucide-icon [img]="icons.Trash2" [size]="16"></lucide-icon>
+                Esvaziar carrinho
+            </button>
+        </div>
+
+        <!-- Lista de produtos -->
+        <div class="cart-items">
+            @for (item of cartItems(); track item.productId) {
+            <div class="cart-item">
+                <!-- Imagem do produto -->
+                <div class="cart-item__image">
+                    @if (item.product.image) {
+                    <img [src]="item.product.image" [alt]="item.product.name" />
+                    } @else {
+                    <div class="image-placeholder">
+                        <span>📦</span>
+                    </div>
+                    }
+                </div>
+
+                <!-- Informações do produto -->
+                <div class="cart-item__info">
+                    <h3 class="product-name">{{ item.product.name }}</h3>
+                    <p class="product-description">{{ item.product.description }}</p>
+                    <div class="product-price">{{ formatPrice(item.product.price) }} / unidade</div>
+                </div>
+
+                <!-- Controles de quantidade -->
+                <div class="cart-item__quantity">
+                    <div class="quantity-label">Quantidade:</div>
+                    <div class="quantity-controls">
+                        <button type="button" (click)="decreaseQuantity(item.productId)" [disabled]="item.quantity <= 1"
+                            class="quantity-btn">
+                            <lucide-icon [img]="icons.Minus" [size]="16"></lucide-icon>
+                        </button>
+
+                        <span class="quantity-display">{{ item.quantity }}</span>
+
+                        <button type="button" (click)="increaseQuantity(item.productId)" class="quantity-btn">
+                            <lucide-icon [img]="icons.Plus" [size]="16"></lucide-icon>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Preço total do item -->
+                <div class="cart-item__total">
+                    <div class="item-total">{{ formatPrice(item.totalPrice) }}</div>
+                </div>
+
+                <!-- Botão remover -->
+                <div class="cart-item__actions">
+                    <button type="button" (click)="removeItem(item.productId)" class="btn-remove"
+                        title="Remover produto">
+                        <lucide-icon [img]="icons.Trash2" [size]="18"></lucide-icon>
+                    </button>
+                </div>
+            </div>
+            }
+        </div>
+
+        <!-- Resumo do pedido -->
+        <div class="cart-summary-section">
+            <div class="summary-card">
+                <h3>Resumo do Pedido</h3>
+
+                <div class="summary-row">
+                    <span>Itens ({{ totalItems() }}):</span>
+                    <span>{{ formatPrice(totalPrice()) }}</span>
+                </div>
+
+                <div class="summary-row summary-total">
+                    <span>Total:</span>
+                    <span>{{ formatPrice(totalPrice()) }}</span>
+                </div>
+
+                <button type="button" class="btn btn-primary btn-checkout">
+                    Finalizar Compra
+                </button>
+            </div>
+        </div>
+
+        <!-- Ações de navegação -->
+        <div class="navigation-actions">
+            <a routerLink="/products-server" class="btn btn-secondary">
+                ← Continuar comprando
+            </a>
+        </div>
+    </div>
+    }
+
+    <!-- Informação sobre estratégias -->
+    <div class="strategy-info">
+        <p>
+            💡 <strong>Dica:</strong> Use o link no topo para voltar ao hub e testar diferentes estratégias de listagem.
+        </p>
+    </div>
+</div>
