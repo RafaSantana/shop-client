@@ -108,10 +108,6 @@ export class ProductListComponent {
 
   // ===== UTILITY METHODS =====
   formatPrice(price: number): string {
-    if (typeof price !== 'number' || isNaN(price)) {
-      return 'R$ 0,00';
-    }
-
     return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: 'BRL',
