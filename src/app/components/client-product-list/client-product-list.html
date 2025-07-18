@@ -1,0 +1,4 @@
+<app-product-list [data]="listData()" [searchTerm]="searchTerm()" [currentPage]="currentPage()"
+    [title]="'🛍️ Produtos (Client-Side)'" [subtitle]="'Busca e filtragem otimizada no navegador'"
+    (searchChange)="onSearchChange($event)" (pageChange)="onPageChange($event)" (productClick)="onAddToCart($event)"
+    (retryClick)="loadProducts()" />
