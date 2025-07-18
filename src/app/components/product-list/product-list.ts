@@ -8,6 +8,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ShoppingCart,
+  ArrowLeft,
 } from 'lucide-angular';
 
 import { Product } from '../../models/product';
@@ -71,7 +72,7 @@ export class ProductListComponent {
   });
 
   // ===== ICONS =====
-  readonly icons = { Search, ChevronLeft, ChevronRight, ShoppingCart };
+  readonly icons = { Search, ChevronLeft, ChevronRight, ShoppingCart, ArrowLeft };
 
   // ===== EVENT HANDLERS =====
   onSearchChange(term: string): void {

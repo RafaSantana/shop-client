@@ -1,15 +1,18 @@
 <div class="container">
-    <!-- Header com título e carrinho -->
+    <!-- Header com navegação discreta -->
     <div class="header">
-        <div class="header__content">
-            <h1 class="header__title">{{ title() }}</h1>
-            <p class="header__subtitle">{{ subtitle() }}</p>
+        <div class="header__navigation">
+            <a routerLink="/home" class="link-discrete">
+                <lucide-icon [img]="icons.ArrowLeft" [size]="16"></lucide-icon>
+                Voltar ao hub de estratégias
+            </a>
         </div>
+    </div>
 
-        <div class="cart-indicator">
-            <lucide-icon [img]="icons.ShoppingCart"></lucide-icon>
-            <span class="cart-count">{{ totalCartItems() }}</span>
-        </div>
+    <!-- Título da página -->
+    <div class="page-title">
+        <h1>{{ title() }}</h1>
+        <p>{{ subtitle() }}</p>
     </div>
 
     <!-- Formulário de busca -->
@@ -123,10 +126,21 @@
     </div>
     }
 
-    <!-- Botão para voltar -->
-    <div class="section" style="text-align: center;">
-        <a routerLink="/home" class="btn btn-secondary">
-            ← Voltar ao início
-        </a>
+    <!-- Ações de navegação -->
+    <div class="section">
+        <div class="navigation-actions">
+            <a routerLink="/cart" class="btn btn-primary">
+                <lucide-icon [img]="icons.ShoppingCart" [size]="18"></lucide-icon>
+                Ver carrinho ({{ totalCartItems() }})
+            </a>
+        </div>
+
+        <!-- Informação sobre estratégias -->
+        <div class="strategy-info">
+            <p>
+                💡 <strong>Dica:</strong> Use o link no topo para voltar ao hub e testar diferentes estratégias de listagem (Client-Side vs
+                Server-Side).
+            </p>
+        </div>
     </div>
 </div>
