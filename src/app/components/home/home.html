@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="hero">
+    <h1 class="hero__title">🛍️ Shop Client</h1>
+    <p class="hero__subtitle">
+      Escolha a estratégia de busca de produtos
+    </p>
+  </div>
+
+  <div class="strategies">
+    <div class="card strategy-card">
+      <div class="strategy-card__header">
+        <lucide-icon [img]="icons.Monitor" class="strategy-icon"></lucide-icon>
+        <h2>Filtragem no Cliente</h2>
+        <span class="badge badge--blue">Client-Side</span>
+      </div>
+      
+      <p class="strategy-card__description">
+        Carrega todos os produtos e realiza filtragem diretamente no navegador.
+        Ideal para datasets pequenos/médios.
+      </p>
+      
+      <a routerLink="/products" class="btn btn-primary">
+        <lucide-icon [img]="icons.Search" [size]="18"></lucide-icon>
+        Ver Lista
+      </a>
+    </div>
+
+    <div class="card strategy-card">
+      <div class="strategy-card__header">
+        <lucide-icon [img]="icons.Server" class="strategy-icon"></lucide-icon>
+        <h2>Filtragem no Servidor</h2>
+        <span class="badge badge--green">Server-Side</span>
+      </div>
+      
+      <p class="strategy-card__description">
+        Utiliza busca otimizada no servidor com paginação. 
+        Escalável para grandes volumes de dados.
+      </p>
+      
+      <a routerLink="/products-server" class="btn btn-primary">
+        <lucide-icon [img]="icons.Zap" [size]="18"></lucide-icon>
+        Ver Lista
+      </a>
+    </div>
+  </div>
+</div>
