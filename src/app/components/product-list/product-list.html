@@ -1,0 +1,135 @@
+<div class="container">
+    <!-- Header com título e carrinho -->
+    <div class="header">
+        <div class="header__content">
+            <h1 class="header__title">{{ title() }}</h1>
+            <p class="header__subtitle">{{ subtitle() }}</p>
+        </div>
+
+        <div class="cart-indicator">
+            <lucide-icon [img]="icons.ShoppingCart"></lucide-icon>
+            <span class="cart-count">{{ totalCartItems() }}</span>
+        </div>
+    </div>
+
+    <!-- Formulário de busca -->
+    <div class="section">
+        <div class="search-form">
+            <div class="search-input">
+                <lucide-icon [img]="icons.Search" class="search-icon"></lucide-icon>
+                <input type="text" placeholder="Buscar produtos..." [ngModel]="searchTerm()"
+                    (ngModelChange)="onSearchChange($event)" (keyup.enter)="onSearchSubmit()"
+                    class="input input--with-icon" />
+            </div>
+            <button type="button" (click)="onSearchSubmit()" class="btn btn-primary" [disabled]="isLoading()">
+                <lucide-icon [img]="icons.Search" [size]="18"></lucide-icon>
+                Buscar
+            </button>
+        </div>
+    </div>
+
+    <!-- Estados de loading/erro -->
+    @if (isLoading()) {
+    <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Carregando produtos...</p>
+    </div>
+    }
+
+    @if (error() && !isLoading()) {
+    <div class="error-state">
+        <p>{{ error() }}</p>
+        <button (click)="onRetry()" class="btn btn-secondary">
+            Tentar novamente
+        </button>
+    </div>
+    }
+
+    <!-- Lista de produtos -->
+    @if (showContent()) {
+    <div class="section">
+        <!-- Informações da paginação -->
+        @if (paginationInfo()) {
+        <div class="info-text">
+            <p>
+                Mostrando {{ paginationInfo()!.start }} - {{ paginationInfo()!.end }}
+                de {{ paginationInfo()!.total }} produtos
+            </p>
+        </div>
+        }
+
+        <!-- Grid de produtos -->
+        @if (hasProducts()) {
+        <div class="grid grid--auto-fit grid--responsive">
+            @for (product of products(); track product.id) {
+            <div class="product-card card">
+                <div class="product-card__image">
+                    @if (product.image) {
+                    <img [src]="product.image" [alt]="product.name" class="product-image" />
+                    } @else {
+                    <div class="product-image-placeholder">
+                        <span>📦</span>
+                    </div>
+                    }
+                </div>
+
+                <div class="product-card__content">
+                    <h3 class="product-title">{{ product.name }}</h3>
+                    <p class="product-description">{{ product.description }}</p>
+                </div>
+
+                <div class="product-card__footer">
+                    <span class="product-price">{{ formatPrice(product.price) }}</span>
+                    <button (click)="onAddToCart(product)" class="btn btn-primary btn-sm">
+                        <lucide-icon [img]="icons.ShoppingCart" [size]="16"></lucide-icon>
+                        Adicionar
+                    </button>
+                </div>
+            </div>
+            }
+        </div>
+        }
+
+        <!-- Estado vazio -->
+        @if (isEmpty()) {
+        <div class="empty-state">
+            <h3>Nenhum produto encontrado</h3>
+            <p>Tente ajustar os filtros de busca</p>
+        </div>
+        }
+
+        <!-- Paginação -->
+        @if (showPagination()) {
+        <div class="pagination">
+            <button (click)="onPageChange(paginationInfo()!.currentPage - 1)"
+                [disabled]="!paginationInfo()!.hasPrevious" class="pagination-btn">
+                <lucide-icon [img]="icons.ChevronLeft" [size]="10"></lucide-icon>
+                Anterior
+            </button>
+
+            <div class="pagination-pages">
+                @for (page of getPaginationPages(); track page) {
+                <button (click)="onPageChange(page)"
+                    [class]="page === paginationInfo()!.currentPage ? 'pagination-current' : 'pagination-btn'">
+                    {{ page }}
+                </button>
+                }
+            </div>
+
+            <button (click)="onPageChange(paginationInfo()!.currentPage + 1)" [disabled]="!paginationInfo()!.hasNext"
+                class="pagination-btn">
+                Próxima
+                <lucide-icon [img]="icons.ChevronRight" [size]="10"></lucide-icon>
+            </button>
+        </div>
+        }
+    </div>
+    }
+
+    <!-- Botão para voltar -->
+    <div class="section" style="text-align: center;">
+        <a routerLink="/home" class="btn btn-secondary">
+            ← Voltar ao início
+        </a>
+    </div>
+</div>
