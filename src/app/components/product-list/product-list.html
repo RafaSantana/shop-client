@@ -62,7 +62,7 @@
         @if (hasProducts()) {
         <div class="grid grid--auto-fit grid--responsive">
             @for (product of products(); track product.id) {
-            <div class="product-card card">
+            <div class="product-card card" (click)="onAddToCart(product)" (keyup.enter)="onAddToCart(product)" tabindex="0" role="button">
                 <div class="product-card__image">
                     @if (product.image) {
                     <img [src]="product.image" [alt]="product.name" class="product-image" />
@@ -80,10 +80,7 @@
 
                 <div class="product-card__footer">
                     <span class="product-price">{{ formatPrice(product.price) }}</span>
-                    <button (click)="onAddToCart(product)" class="btn btn-primary btn-sm">
-                        <lucide-icon [img]="icons.ShoppingCart" [size]="16"></lucide-icon>
-                        Adicionar
-                    </button>
+                    <span class="product-view-details">Ver detalhes →</span>
                 </div>
             </div>
             }

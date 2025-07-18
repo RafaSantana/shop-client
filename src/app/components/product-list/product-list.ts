@@ -30,7 +30,7 @@ export class ProductListComponent {
   // ===== OUTPUTS =====
   readonly searchChange = output<string>();
   readonly pageChange = output<number>();
-  readonly addToCartClick = output<Product>();
+  readonly productClick = output<Product>();
   readonly retryClick = output<void>();
 
   // ===== COMPUTED VALUES - DATA =====
@@ -98,7 +98,7 @@ export class ProductListComponent {
 
   onAddToCart(product: Product): void {
     if (product?.id) {
-      this.addToCartClick.emit(product);
+      this.productClick.emit(product);
     }
   }
 

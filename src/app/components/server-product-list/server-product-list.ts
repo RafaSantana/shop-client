@@ -1,4 +1,5 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 
 import { ProductService } from '../../services/product';
@@ -16,6 +17,7 @@ import { ProductListData } from '../../models/product-list-data';
 export class ServerProductListComponent implements OnInit {
   private readonly productService = inject(ProductService);
   private readonly cartService = inject(ShoppingCartService);
+  private readonly router = inject(Router);
 
   private readonly responseSignal = signal<PaginatedResponse<Product> | null>(null);
   private readonly loadingSignal = signal(false);
@@ -51,7 +53,7 @@ export class ServerProductListComponent implements OnInit {
   }
 
   onAddToCart(product: Product): void {
-    this.cartService.addToCart(product);
+    this.router.navigate(['/product', product.id]);
   }
 
   loadProducts(): void {
